@@ -1,7 +1,4 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
-using System;
-using System.Diagnostics;
 using UnboundLib;
 using UnboundLib.Utils.UI;
 using UnityEngine;
@@ -15,7 +12,7 @@ namespace CatInfo
     [BepInDependency("com.willuwontu.rounds.tabinfo", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(ModId, ModName, Version)]
     [BepInProcess("Rounds.exe")]
-    public class CatsTab : BaseUnityPlugin
+    public class CatInfo : BaseUnityPlugin
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
