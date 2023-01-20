@@ -16,7 +16,7 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "1.1.0";
+        public const string Version = "2.0.0";
         public const string ModInitials = "Cats";
 
         internal static string ConfigKey(string name)
