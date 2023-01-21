@@ -323,15 +323,15 @@ namespace CatInfo
         {
             MenuHandler.CreateText(ModName + " Options", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
-            GameObject BasicStatsExtended = MenuHandler.CreateMenu("BasicStatsExtended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject BasicStatsExtended = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             BasicStatsExtendedToggles(BasicStatsExtended);
-            GameObject UsefulStats = MenuHandler.CreateMenu("UsefulStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject UsefulStats = MenuHandler.CreateMenu("Useful Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             UsefulStatsToggles(UsefulStats);
-            GameObject AdvancedHealthStats = MenuHandler.CreateMenu("AdvancedHealthStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject AdvancedHealthStats = MenuHandler.CreateMenu("Advanced Health Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedHealthStatsToggles(AdvancedHealthStats);
-            GameObject AdvancedGunStats = MenuHandler.CreateMenu("AdvancedGunStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject AdvancedGunStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedGunStatsToggles(AdvancedGunStats);
-            GameObject OnBounceEffects = MenuHandler.CreateMenu("OnBounceMultipliers", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject OnBounceEffects = MenuHandler.CreateMenu("On Bounce Effects", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             OnBounceEffectsToggles(OnBounceEffects);
         }
         private static void BasicStatsExtendedToggles(GameObject menu)
@@ -369,7 +369,6 @@ namespace CatInfo
             MenuHandler.CreateToggle(BulletDrag, "Bullet Drag", menu, value => BulletDrag = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BulletSlow, "Bullet Slow", menu, value => BulletSlow = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(Knockback, "Knockback", menu, value => Knockback = value, fontSize: 50, forceUpper: false);
-
         }
         private static void OnBounceEffectsToggles(GameObject menu)
         {
