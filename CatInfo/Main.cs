@@ -324,15 +324,15 @@ namespace CatInfo
             MenuHandler.CreateText(ModName + " Options", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
             GameObject BasicStatsExtended = MenuHandler.CreateMenu("BasicStatsExtended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            BasicStatsExtendedToggles(menu);
+            BasicStatsExtendedToggles(BasicStatsExtended);
             GameObject UsefulStats = MenuHandler.CreateMenu("UsefulStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            UsefulStatsToggles(menu);
+            UsefulStatsToggles(UsefulStats);
             GameObject AdvancedHealthStats = MenuHandler.CreateMenu("AdvancedHealthStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            AdvancedHealthStatsToggles(menu);
+            AdvancedHealthStatsToggles(AdvancedHealthStats);
             GameObject AdvancedGunStats = MenuHandler.CreateMenu("AdvancedGunStats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            AdvancedGunStatsToggles(menu);
-            GameObject OnBounceMultipliers = MenuHandler.CreateMenu("OnBounceMultipliers", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            OnBounceMultipliersToggles(menu);
+            AdvancedGunStatsToggles(AdvancedGunStats);
+            GameObject OnBounceEffects = MenuHandler.CreateMenu("OnBounceMultipliers", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            OnBounceEffectsToggles(OnBounceEffects);
         }
         private static void BasicStatsExtendedToggles(GameObject menu)
         {
@@ -371,7 +371,7 @@ namespace CatInfo
             MenuHandler.CreateToggle(Knockback, "Knockback", menu, value => Knockback = value, fontSize: 50, forceUpper: false);
 
         }
-        private static void OnBounceMultipliersToggles(GameObject menu)
+        private static void OnBounceEffectsToggles(GameObject menu)
         {
             MenuHandler.CreateToggle(OnBounceBulletDamage, "On Bounce Bullet Damage", menu, value => OnBounceBulletDamage = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(OnBounceBulletSpeed, "On Bounce Bullet Speed", menu, value => OnBounceBulletSpeed = value, fontSize: 50, forceUpper: false);
