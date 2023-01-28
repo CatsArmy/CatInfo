@@ -36,7 +36,6 @@ namespace CatInfo
             TabInfoManager.RegisterStat(advCatHealth, "Total Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
             TabInfoManager.RegisterStat(advCatHealth, "Recoil Multiplier", (p) => CatInfo.RecoilMultiplier && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.recoilMuiltiplier));
             TabInfoManager.RegisterStat(advCatHealth, "Body Recoil", (p) => CatInfo.BodyRecoil && p.data.weaponHandler.gun.bodyRecoil != 0, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil));
-
             var advCatGun = TabInfoManager.RegisterCategory("Advanced Gun Stats", 3);
             //#Advanced Gun Stats
             TabInfoManager.RegisterStat(advCatGun, "%Health Damage", (p) => CatInfo.HealthCulling && p.data.weaponHandler.gun.percentageDamage > 0, (p) => string.Format("{0:F1}%", p.data.weaponHandler.gun.percentageDamage * 100.0f));
