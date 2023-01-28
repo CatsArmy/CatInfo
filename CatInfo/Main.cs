@@ -16,9 +16,9 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "2.0.0";
+        public const string Version = "2.1.0";
         public const string ModInitials = "Cats";
-
+        
         internal static string ConfigKey(string name)
         {
             return $"{ModId}_{name.ToLower()}";
@@ -99,7 +99,7 @@ namespace CatInfo
             }
         }
         //# Useful Stats
-        public static bool Unblockable
+        public static bool UnblockableBullets
         {
             get
             {
@@ -110,7 +110,7 @@ namespace CatInfo
                 SetBool("Unblockable", value);
             }
         }
-        public static bool Ghost
+        public static bool GhostBullet
         {
             get
             {
@@ -119,6 +119,61 @@ namespace CatInfo
             set
             {
                 SetBool("Ghost", value);
+            }
+        }
+        public static bool OnBounceBulletDamage
+        {
+            get
+            {
+                return GetBool("OnBounceBulletDamage", true);
+            }
+            set
+            {
+                SetBool("OnBounceBulletDamage", value);
+            }
+        }
+        public static bool OnBounceBulletSpeed
+        {
+            get
+            {
+                return GetBool("OnBounceBulletSpeed", true);
+            }
+            set
+            {
+                SetBool("OnBounceBulletSpeed", value);
+            }
+        }
+        public static bool AmmoRegen
+        {
+            get
+            {
+                return GetBool("AmmoRegen");
+            }
+            set
+            {
+                SetBool("AmmoRegen", value);
+            }
+        }
+        public static bool UseCharge
+        {
+            get
+            {
+                return GetBool("UseCharge");
+            }
+            set
+            {
+                SetBool("UseCharge", value);
+            }
+        }
+        public static bool NoFullAutoInTheBuilding
+        {
+            get
+            {
+                return GetBool("NoFullAutoInTheBuilding");
+            }
+            set
+            {
+                SetBool("NoFullAutoInTheBuilding", value);
             }
         }
         //# Advanced Health Stats
@@ -137,7 +192,7 @@ namespace CatInfo
         {
             get
             {
-                return GetBool("HealingOnBlock", true);
+                return GetBool("HealingOnBlock");
             }
             set
             {
@@ -177,6 +232,72 @@ namespace CatInfo
                 SetBool("Size", value);
             }
         }
+        public static bool Jumps
+        {
+            get
+            {
+                return GetBool("Jumps");
+            }
+            set
+            {
+                SetBool("Jumps", value);
+            }
+        }
+        public static bool JumpHight
+        {
+            get
+            {
+                return GetBool("JumpHight");
+            }
+            set
+            {
+                SetBool("JumpHight", value);
+            }
+        }
+        public static bool Gravity
+        {
+            get
+            {
+                return GetBool("Gravity");
+            }
+            set
+            {
+                SetBool("Gravity", value);
+            }
+        }
+        public static bool Recoil
+        {
+            get
+            {
+                return GetBool("Recoil");
+            }
+            set
+            {
+                SetBool("Recoil", value);
+            }
+        }
+        public static bool BodyRecoil
+        {
+            get
+            {
+                return GetBool("BodyRecoil");
+            }
+            set
+            {
+                SetBool("BodyRecoil", value);
+            }
+        }
+        public static bool RecoilMultiplier
+        {
+            get
+            {
+                return GetBool("RecoilMultiplier");
+            }
+            set
+            {
+                SetBool("RecoilMultiplier", value);
+            }
+        }
         //#Advanced Gun Stats
         public static bool HealthCulling
         {
@@ -187,17 +308,6 @@ namespace CatInfo
             set
             {
                 SetBool("HealthCulling", value);
-            }
-        }
-        public static bool BulletSize
-        {
-            get
-            {
-                return GetBool("BulletSize", true);
-            }
-            set
-            {
-                SetBool("BulletSize", value);
             }
         }
         public static bool BulletRange
@@ -220,6 +330,28 @@ namespace CatInfo
             set
             {
                 SetBool("BulletSpeed", value);
+            }
+        }
+        public static bool BulletSize
+        {
+            get
+            {
+                return GetBool("BulletSize", true);
+            }
+            set
+            {
+                SetBool("BulletSize", value);
+            }
+        }
+        public static bool ProjectileSize
+        {
+            get
+            {
+                return GetBool("ProjectileSize", true);
+            }
+            set
+            {
+                SetBool("ProjectileSize", value);
             }
         }
         public static bool ProjectileSpeed
@@ -255,11 +387,22 @@ namespace CatInfo
                 SetBool("BulletSpread", value);
             }
         }
+        public static bool EvenBulletSpread
+        {
+            get
+            {
+                return GetBool("EvenBulletSpread");
+            }
+            set
+            {
+                SetBool("EvenBulletSpread", value);
+            }
+        }
         public static bool BulletDrag
         {
             get
             {
-                return GetBool("BulletDrag", true);
+                return GetBool("BulletDrag");
             }
             set
             {
@@ -270,7 +413,7 @@ namespace CatInfo
         {
             get
             {
-                return GetBool("BulletSlow", true);
+                return GetBool("BulletSlow");
             }
             set
             {
@@ -288,53 +431,120 @@ namespace CatInfo
                 SetBool("Knockback", value);
             }
         }
-        //# On Bounce Multiplyers
-        public static bool OnBounceBulletDamage
+        public static bool BulletGravity
         {
             get
             {
-                return GetBool("OnBounceBulletDamage", true);
+                return GetBool("BulletGravity");
             }
             set
             {
-                SetBool("OnBounceBulletDamage", value);
+                SetBool("BulletGravity", value);
             }
         }
-        public static bool OnBounceBulletSpeed
+        public static bool TimeBetweenBursts
         {
             get
             {
-                return GetBool("OnBounceBulletSpeed", true);
+                return GetBool("TimeBetweenBursts");
             }
             set
             {
-                SetBool("OnBounceBulletSpeed", value);
+                SetBool("TimeBetweenBursts", value);
             }
         }
+        //#Charged Stats
+        public static bool ChargedDamageMultiplier
+        {
+            get
+            {
+                return GetBool("ChargedDamageMultiplier");
+            }
+            set
+            {
+                SetBool("ChargedDamageMultiplier", value);
+            }
+        }
+        public static bool ChargedSpeed
+        {
+            get
+            {
+                return GetBool("ChargedSpeed");
+            }
+            set
+            {
+                SetBool("ChargedSpeed", value);
+            }
+        }
+        public static bool ChargedSpread
+        {
+            get
+            {
+                return GetBool("ChargedSpread");
+            }
+            set
+            {
+                SetBool("ChargedSpread", value);
+            }
+        }
+        public static bool ChargedEvenSpread
+        {
+            get
+            {
+                return GetBool("ChargedEvenSpread");
+            }
+            set
+            {
+                SetBool("ChargedEvenSpread", value);
+            }
+        }
+        public static bool ChargedRecoil
+        {
+            get
+            {
+                return GetBool("ChargedRecoil");
+            }
+            set
+            {
+                SetBool("ChargedRecoil", value);
+            }
+        }
+        public static bool ChargedNumberOfProjectiles
+        {
+            get
+            {
+                return GetBool("ChargedNumberOfProjectiles");
+            }
+            set
+            {
+                SetBool("ChargedNumberOfProjectiles", value);
+            }
+        }
+
 
         private void Start()
         {
             TabinfoInterface.Setup();
             Unbound.RegisterClientSideMod(ModId);
 
-            Unbound.RegisterMenu(ModName, () => { }, NewGUI, null, false);
+            Unbound.RegisterMenu(ModName, () => { }, NewGUI, null, true);
         }
         private static void NewGUI(GameObject menu)
         {
-            MenuHandler.CreateText(ModName + " Options", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateText(" Toggle" + ModName + "Stats", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
-            GameObject BasicStatsExtended = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            BasicStatsExtendedToggles(BasicStatsExtended);
+            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            BasicStatsToggles(BasicStats);
             GameObject UsefulStats = MenuHandler.CreateMenu("Useful Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             UsefulStatsToggles(UsefulStats);
             GameObject AdvancedHealthStats = MenuHandler.CreateMenu("Advanced Health Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedHealthStatsToggles(AdvancedHealthStats);
             GameObject AdvancedGunStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedGunStatsToggles(AdvancedGunStats);
-            GameObject OnBounceEffects = MenuHandler.CreateMenu("On Bounce Effects", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            OnBounceEffectsToggles(OnBounceEffects);
+            GameObject ChargedStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            ChargedStatsToggles(ChargedStats);
         }
-        private static void BasicStatsExtendedToggles(GameObject menu)
+        private static void BasicStatsToggles(GameObject menu)
         {
             MenuHandler.CreateToggle(EchoBlocks, "Echo Blocks", menu, value => EchoBlocks = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(AttackSpeed, "Attack Speed", menu, value => AttackSpeed = value, fontSize: 50, forceUpper: false);
@@ -345,36 +555,70 @@ namespace CatInfo
         }
         private static void UsefulStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateToggle(Unblockable, "Unblockable", menu, value => Unblockable = value, fontSize: 50, forceUpper: false);
-            MenuHandler.CreateToggle(Ghost, "Ghost", menu, value => Ghost = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Unblockable Bullets is just unblockable bullets", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(UnblockableBullets, "Unblockable Bullets", menu, value => UnblockableBullets = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Ghost Bullets lets your bullets pass through walls and shit", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(GhostBullet, "Ghost Bullets", menu, value => GhostBullet = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Plasma Gun aka Use Charge like plasma rifle (WWC) or plasma shotgun (WWC)", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateText("Causes the gun to use a charge system for firing. None of the charge stats work without this being set to true.", menu, out TextMeshProUGUI _, 40);
+            MenuHandler.CreateToggle(UseCharge, "Plasma Gun", menu, value => UseCharge = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("No Full Auto In The Building lol u cant hold down the mouse like demonic pact", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(NoFullAutoInTheBuilding, "Not An Automatic Gun", menu, value => NoFullAutoInTheBuilding = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("%Ammo Regen is the percentage of ammo regenerated each second", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(AmmoRegen, "%Ammo Regen", menu, value => AmmoRegen = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(OnBounceBulletDamage, "On Bounce Bullet Damage", menu, value => OnBounceBulletDamage = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(OnBounceBulletSpeed, "On Bounce Bullet Speed", menu, value => OnBounceBulletSpeed = value, fontSize: 50, forceUpper: false);
         }
         private static void AdvancedHealthStatsToggles(GameObject menu)
         {
             MenuHandler.CreateToggle(Revives, "Revives", menu, value => Revives = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Healing On Block adds to the amount of HP the player heals when they block", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(HealingOnBlock, "Healing On Block", menu, value => HealingOnBlock = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Health Decay increases the amount of time damage is applied to the player over", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(HealthDecay, "Health Decay", menu, value => HealthDecay = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(Regenaration, "Regenaration", menu, value => Regenaration = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("The Size stat multiplies the current size of the player", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(Size, "Size", menu, value => Size = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(Jumps, "Jumps", menu, value => Jumps = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(JumpHight, "Jump Hight", menu, value => JumpHight = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(Gravity, "Gravity", menu, value => Gravity = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("What i use as the total recoil of bodyrecoil * chargerecoil * recoilmultiplier", menu, out TextMeshProUGUI _, 40);
+            MenuHandler.CreateToggle(Recoil, "Recoil", menu, value => Recoil = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(BodyRecoil, "Body Recoil", menu, value => BodyRecoil = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(RecoilMultiplier, "Recoil Multiplier", menu, value => RecoilMultiplier = value, fontSize: 50, forceUpper: false);
 
         }
         private static void AdvancedGunStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateToggle(HealthCulling, "Health Culling", menu, value => HealthCulling = value, fontSize: 50, forceUpper: false);
-            MenuHandler.CreateToggle(BulletSize, "Bullet Size", menu, value => BulletSize = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("%Health Culling is how much of the target's max HP adds as additional damage", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(HealthCulling, "%Health Culling", menu, value => HealthCulling = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BulletRange, "Bullet Range", menu, value => BulletRange = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BulletSpeed, "Bullet Speed", menu, value => BulletSpeed = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Bullet Size makes ur bullet bigger", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(BulletSize, "Bullet Size", menu, value => BulletSize = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Projectile Size makes ur projectiles bigger", menu, out TextMeshProUGUI _, 60);
+            MenuHandler.CreateToggle(ProjectileSize, "Bullet Size", menu, value => ProjectileSize = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Projectile Size And Bullet Size are diffrent but idk in what way", menu, out TextMeshProUGUI _, 40);
             MenuHandler.CreateToggle(ProjectileSpeed, "Projectile Speed", menu, value => ProjectileSpeed = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Damage Growth adjusts the damage of the bullet after it moves 10 units", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(DamageGrowth, "Damage Growth", menu, value => DamageGrowth = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BulletSpread, "Bullet Spread", menu, value => BulletSpread = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(EvenBulletSpread, "Even Bullet Spread", menu, value => EvenBulletSpread = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Bullet Drag is how much the bullet is affected by simulated air resistance", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(BulletDrag, "Bullet Drag", menu, value => BulletDrag = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BulletSlow, "Bullet Slow", menu, value => BulletSlow = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(BulletGravity, "Bullet Gravity", menu, value => BulletGravity = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(Knockback, "Knockback", menu, value => Knockback = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(TimeBetweenBursts, "Time Between Bursts", menu, value => TimeBetweenBursts = value, fontSize: 50, forceUpper: false);
         }
-        private static void OnBounceEffectsToggles(GameObject menu)
+        private static void ChargedStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateToggle(OnBounceBulletDamage, "On Bounce Bullet Damage", menu, value => OnBounceBulletDamage = value, fontSize: 50, forceUpper: false);
-            MenuHandler.CreateToggle(OnBounceBulletSpeed, "On Bounce Bullet Speed", menu, value => OnBounceBulletSpeed = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedDamageMultiplier, "Plasma Charged Damage Multiplier", menu, value => ChargedDamageMultiplier = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedSpeed, "Plasma Charged Speed", menu, value => ChargedSpeed = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedSpread, "Plasma Charged Spread", menu, value => ChargedSpread = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedEvenSpread, "Plasma Charged Spread", menu, value => ChargedEvenSpread = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedRecoil, "Plasma Charged Recoil", menu, value => ChargedRecoil = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedNumberOfProjectiles, "Plasma Charged Number Of Bullets", menu, value => ChargedNumberOfProjectiles = value, fontSize: 50, forceUpper: false);
         }
-
     }
 }
