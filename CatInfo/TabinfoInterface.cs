@@ -33,7 +33,7 @@ namespace CatInfo
             TabInfoManager.RegisterStat(advCatHealth, "Jumps", (p) => CatInfo.Jumps && p.data.stats.numberOfJumps > 1, (p) => string.Format("{0:F0}", p.data.stats.numberOfJumps));
             TabInfoManager.RegisterStat(advCatHealth, "Jump Hight", (p) => CatInfo.JumpHight && p.data.stats.jump != 1, (p) => string.Format("{0:F2}", p.data.stats.jump));
             TabInfoManager.RegisterStat(advCatHealth, "Gravity", (p) => CatInfo.Gravity && p.data.stats.gravity != 1, (p) => string.Format("{0:F2}", p.data.stats.gravity));
-            TabInfoManager.RegisterStat(advCatHealth, "Total Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
+            TabInfoManager.RegisterStat(advCatHealth, "Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
             TabInfoManager.RegisterStat(advCatHealth, "Recoil Multiplier", (p) => CatInfo.RecoilMultiplier && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.recoilMuiltiplier));
             TabInfoManager.RegisterStat(advCatHealth, "Body Recoil", (p) => CatInfo.BodyRecoil && p.data.weaponHandler.gun.bodyRecoil != 0, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil));
             var advCatGun = TabInfoManager.RegisterCategory("Advanced Gun Stats", 3);
