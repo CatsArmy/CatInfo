@@ -16,7 +16,7 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "2.1.0";
+        public const string Version = "2.1.1";
         public const string ModInitials = "Cats";
         
         internal static string ConfigKey(string name)
@@ -533,7 +533,7 @@ namespace CatInfo
         {
             MenuHandler.CreateText(" Toggle" + ModName + "Stats", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
-            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             BasicStatsToggles(BasicStats);
             GameObject UsefulStats = MenuHandler.CreateMenu("Useful Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             UsefulStatsToggles(UsefulStats);
@@ -541,11 +541,13 @@ namespace CatInfo
             AdvancedHealthStatsToggles(AdvancedHealthStats);
             GameObject AdvancedGunStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedGunStatsToggles(AdvancedGunStats);
-            GameObject ChargedStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject ChargedStats = MenuHandler.CreateMenu("Plasma Charged Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             ChargedStatsToggles(ChargedStats);
         }
         private static void BasicStatsToggles(GameObject menu)
         {
+            MenuHandler.CreateText("This Cannot Toggle The Defualt Basic Stats That TabInfo Adds Only The Ones That CatInfo Adds", menu, out TextMeshProUGUI _, 55);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
             MenuHandler.CreateToggle(EchoBlocks, "Echo Blocks", menu, value => EchoBlocks = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(AttackSpeed, "Attack Speed", menu, value => AttackSpeed = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(LifeSteal, "Life Steal", menu, value => LifeSteal = value, fontSize: 50, forceUpper: false);
@@ -586,7 +588,6 @@ namespace CatInfo
             MenuHandler.CreateToggle(Recoil, "Recoil", menu, value => Recoil = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(BodyRecoil, "Body Recoil", menu, value => BodyRecoil = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(RecoilMultiplier, "Recoil Multiplier", menu, value => RecoilMultiplier = value, fontSize: 50, forceUpper: false);
-
         }
         private static void AdvancedGunStatsToggles(GameObject menu)
         {
