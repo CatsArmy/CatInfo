@@ -16,7 +16,7 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "2.1.1";
+        public const string Version = "2.1.2";
         public const string ModInitials = "Cats";
         
         internal static string ConfigKey(string name)
@@ -533,7 +533,7 @@ namespace CatInfo
         {
             MenuHandler.CreateText(" Toggle" + ModName + "Stats", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
-            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             BasicStatsToggles(BasicStats);
             GameObject UsefulStats = MenuHandler.CreateMenu("Useful Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             UsefulStatsToggles(UsefulStats);
@@ -563,7 +563,7 @@ namespace CatInfo
             MenuHandler.CreateToggle(GhostBullet, "Ghost Bullets", menu, value => GhostBullet = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateText("Plasma Gun aka Use Charge like plasma rifle (WWC) or plasma shotgun (WWC)", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateText("Causes the gun to use a charge system for firing. None of the charge stats work without this being set to true.", menu, out TextMeshProUGUI _, 40);
-            MenuHandler.CreateToggle(UseCharge, "Plasma Gun", menu, value => UseCharge = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(UseCharge, "Chargable Plasma Gun", menu, value => UseCharge = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateText("No Full Auto In The Building lol u cant hold down the mouse like demonic pact", menu, out TextMeshProUGUI _, 60);
             MenuHandler.CreateToggle(NoFullAutoInTheBuilding, "Not An Automatic Gun", menu, value => NoFullAutoInTheBuilding = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateText("%Ammo Regen is the percentage of ammo regenerated each second", menu, out TextMeshProUGUI _, 60);
@@ -617,7 +617,7 @@ namespace CatInfo
             MenuHandler.CreateToggle(ChargedDamageMultiplier, "Plasma Charged Damage Multiplier", menu, value => ChargedDamageMultiplier = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(ChargedSpeed, "Plasma Charged Speed", menu, value => ChargedSpeed = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(ChargedSpread, "Plasma Charged Spread", menu, value => ChargedSpread = value, fontSize: 50, forceUpper: false);
-            MenuHandler.CreateToggle(ChargedEvenSpread, "Plasma Charged Spread", menu, value => ChargedEvenSpread = value, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateToggle(ChargedEvenSpread, "Plasma Charged Even Spread", menu, value => ChargedEvenSpread = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(ChargedRecoil, "Plasma Charged Recoil", menu, value => ChargedRecoil = value, fontSize: 50, forceUpper: false);
             MenuHandler.CreateToggle(ChargedNumberOfProjectiles, "Plasma Charged Number Of Bullets", menu, value => ChargedNumberOfProjectiles = value, fontSize: 50, forceUpper: false);
         }
