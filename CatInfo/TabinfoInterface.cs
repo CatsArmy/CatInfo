@@ -14,15 +14,14 @@ namespace CatInfo
             TabInfoManager.RegisterStat(basicCat, "Bullet Bounces", (p) => CatInfo.BulletBounces && p.data.weaponHandler.gun.reflects != 0, (p) => string.Format("{0:F0}", p.data.weaponHandler.gun.reflects));
             TabInfoManager.RegisterStat(basicCat, "Bursts", (p) => CatInfo.Bursts && p.data.weaponHandler.gun.bursts > 1, (p) => string.Format("{0:F0}", p.data.weaponHandler.gun.bursts - 2));
             TabInfoManager.RegisterStat(basicCat, "Bullets", (p) => CatInfo.Bullets && p.data.weaponHandler.gun.numberOfProjectiles > 1, (p) => string.Format("{0:F0}", p.data.weaponHandler.gun.numberOfProjectiles));
+            TabInfoManager.RegisterStat(basicCat, "On Bounce Bullet Damage", (p) => CatInfo.OnBounceBulletDamage && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.dmgMOnBounce != 1 , (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.dmgMOnBounce - 1f) * 100f));
+            TabInfoManager.RegisterStat(basicCat, "On Bounce Bullet Speed", (p) => CatInfo.OnBounceBulletSpeed  && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.speedMOnBounce != 1, (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.speedMOnBounce - 1f) * 100f));
             var usefulCat = TabInfoManager.RegisterCategory("Useful Stats", 1);
             //#Useful Stats
             TabInfoManager.RegisterStat(usefulCat, "Unblockable Bullets", (p) => CatInfo.UnblockableBullets && p.data.weaponHandler.gun.unblockable == true, (p) => "Ignores Blocks");
-            TabInfoManager.RegisterStat(usefulCat, "Ghost Bullets", (p) => CatInfo.GhostBullet && p.data.weaponHandler.gun.ignoreWalls == true, (p) => "Ignores Walls");
+            TabInfoManager.RegisterStat(usefulCat, "Ghost Bullets", (p) => CatInfo.GhostBullets && p.data.weaponHandler.gun.ignoreWalls == true, (p) => "Ignores Walls");
             TabInfoManager.RegisterStat(usefulCat, "Plasma Gun", (p) => CatInfo.UseCharge && p.data.weaponHandler.gun.useCharge == true, (p) => "Can Be  Charge");
-            TabInfoManager.RegisterStat(usefulCat, "Not An Automatic Gun", (p) => CatInfo.NoFullAutoInTheBuilding && p.data.weaponHandler.gun.dontAllowAutoFire == true, (p) => "Click Fast NOW!");
-            TabInfoManager.RegisterStat(usefulCat, "%Ammo Regen", (p) => CatInfo.AmmoRegen && p.data.weaponHandler.gun.ammoReg > 0, (p) => string.Format("{0:0F}", p.data.weaponHandler.gun.ammoReg * 100.0f));
-            TabInfoManager.RegisterStat(usefulCat, "On Bounce Bullet Damage", (p) => CatInfo.OnBounceBulletDamage && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.dmgMOnBounce != 1 , (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.dmgMOnBounce - 1f) * 100f));
-            TabInfoManager.RegisterStat(usefulCat, "On Bounce Bullet Speed", (p) => CatInfo.OnBounceBulletSpeed  && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.speedMOnBounce != 1, (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.speedMOnBounce - 1f) * 100f));
+            TabInfoManager.RegisterStat(usefulCat, "Dont Allow Auto Fire", (p) => CatInfo.DontAllowAutoFire && p.data.weaponHandler.gun.dontAllowAutoFire == true, (p) => "Click Fast NOW!");
             var advCatHealth = TabInfoManager.RegisterCategory("Advanced Health Stats", 2);
             //#Advanced Health Stats
             TabInfoManager.RegisterStat(advCatHealth, "Revives", (p) => CatInfo.Revives && p.data.stats.respawns > 0, (p) => string.Format("{0:F0}", p.data.stats.respawns));
@@ -33,9 +32,6 @@ namespace CatInfo
             TabInfoManager.RegisterStat(advCatHealth, "Jumps", (p) => CatInfo.Jumps && p.data.stats.numberOfJumps > 1, (p) => string.Format("{0:F0}", p.data.stats.numberOfJumps));
             TabInfoManager.RegisterStat(advCatHealth, "Jump Hight", (p) => CatInfo.JumpHight && p.data.stats.jump != 1, (p) => string.Format("{0:F2}", p.data.stats.jump));
             TabInfoManager.RegisterStat(advCatHealth, "Gravity", (p) => CatInfo.Gravity && p.data.stats.gravity != 1, (p) => string.Format("{0:F2}", p.data.stats.gravity));
-            TabInfoManager.RegisterStat(advCatHealth, "Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
-            TabInfoManager.RegisterStat(advCatHealth, "Recoil Multiplier", (p) => CatInfo.RecoilMultiplier && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.recoilMuiltiplier));
-            TabInfoManager.RegisterStat(advCatHealth, "Body Recoil", (p) => CatInfo.BodyRecoil && p.data.weaponHandler.gun.bodyRecoil != 0, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil));
             var advCatGun = TabInfoManager.RegisterCategory("Advanced Gun Stats", 3);
             //#Advanced Gun Stats
             TabInfoManager.RegisterStat(advCatGun, "%Health Damage", (p) => CatInfo.HealthCulling && p.data.weaponHandler.gun.percentageDamage > 0, (p) => string.Format("{0:F1}%", p.data.weaponHandler.gun.percentageDamage * 100.0f));
@@ -52,6 +48,10 @@ namespace CatInfo
             TabInfoManager.RegisterStat(advCatGun, "Bullet Gravity", (p) => CatInfo.BulletGravity && p.data.weaponHandler.gun.gravity != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.gravity));
             TabInfoManager.RegisterStat(advCatGun, "Bullet Knockback", (p) => CatInfo.Knockback && p.data.weaponHandler.gun.knockback != 1, (p) => string.Format("{0:F0}", p.data.weaponHandler.gun.knockback));
             TabInfoManager.RegisterStat(advCatGun, "Time Between Bursts", (p) => CatInfo.TimeBetweenBursts && p.data.weaponHandler.gun.timeBetweenBullets != 1 && p.data.weaponHandler.gun.bursts > 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.timeBetweenBullets));
+            TabInfoManager.RegisterStat(advCatGun, "%Ammo Regen", (p) => CatInfo.AmmoRegen && p.data.weaponHandler.gun.ammoReg > 0, (p) => string.Format("{0:0F}", p.data.weaponHandler.gun.ammoReg * 100.0f));
+            TabInfoManager.RegisterStat(advCatGun, "Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
+            TabInfoManager.RegisterStat(advCatGun, "Recoil Multiplier", (p) => CatInfo.RecoilMultiplier && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.recoilMuiltiplier));
+            TabInfoManager.RegisterStat(advCatGun, "Body Recoil", (p) => CatInfo.BodyRecoil && p.data.weaponHandler.gun.bodyRecoil != 0, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil));
             var chargedCat = TabInfoManager.RegisterCategory("Plasma Charged Stats", 4);
             //#ChargedStats
             TabInfoManager.RegisterStat(chargedCat, "Plasma Charged Damage Multiplier", (p) => CatInfo.ChargedDamageMultiplier && p.data.weaponHandler.gun.useCharge && p.data.weaponHandler.gun.chargeDamageMultiplier != 0, (p) => string.Format("{0:F2}",p.data.weaponHandler.gun.chargeDamageMultiplier));
