@@ -16,15 +16,15 @@ namespace CatInfo
             TabInfoManager.RegisterStat(basicCat, "Bullets", (p) => CatInfo.Bullets && p.data.weaponHandler.gun.numberOfProjectiles > 1, (p) => string.Format("{0:F0}", p.data.weaponHandler.gun.numberOfProjectiles));
             TabInfoManager.RegisterStat(basicCat, "Bounce Damage", (p) => CatInfo.BounceDamage && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.dmgMOnBounce != 1 , (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.dmgMOnBounce - 1f) * 100f));
             TabInfoManager.RegisterStat(basicCat, "Bounce Speed", (p) => CatInfo.BounceSpeed  && p.data.weaponHandler.gun.reflects > 0 && p.data.weaponHandler.gun.speedMOnBounce != 1, (p) => string.Format("{0:F0}%", (p.data.weaponHandler.gun.speedMOnBounce - 1f) * 100f));
-            var usefulCat = TabInfoManager.RegisterCategory("Useful Stats", 1);
+            var usefulCat = TabInfoManager.RegisterCategory("Useful Stats", 4);
             //#Useful Stats
             TabInfoManager.RegisterStat(usefulCat, "Unblockable", (p) => CatInfo.Unblockable && p.data.weaponHandler.gun.unblockable == true, (p) => "Ignores Blocks");
             TabInfoManager.RegisterStat(usefulCat, "Ghost Bullets", (p) => CatInfo.GhostBullets && p.data.weaponHandler.gun.ignoreWalls == true, (p) => "Ignores Walls");
             TabInfoManager.RegisterStat(usefulCat, "Chargable Gun", (p) => CatInfo.Chargable && p.data.weaponHandler.gun.useCharge == true, (p) => "Chargable");
             TabInfoManager.RegisterStat(usefulCat, "Demonic Gun", (p) => CatInfo.DemonicGun && p.data.weaponHandler.gun.dontAllowAutoFire == true, (p) => "Cant Hold Down Mouse");
-            var advCatHealth = TabInfoManager.RegisterCategory("Advanced Health Stats", 2);
+            var advCatHealth = TabInfoManager.RegisterCategory("Advanced Character Stats", 2);
             //#Advanced Health Stats
-            TabInfoManager.RegisterStat(advCatHealth, "Phoenix Revives", (p) => CatInfo.Phoenix && p.data.stats.respawns > 0, (p) => string.Format("{0:F0}", p.data.stats.respawns));
+            TabInfoManager.RegisterStat(advCatHealth, "Phoenix Lives", (p) => CatInfo.Phoenix && p.data.stats.respawns > 0, (p) => string.Format("{0:F0}", p.data.stats.respawns));
             TabInfoManager.RegisterStat(advCatHealth, "Healing On Block", (p) => CatInfo.HealingOnBlock && p.data.block.healing > 0, (p) => string.Format("{0:F0}", p.data.block.healing));
             TabInfoManager.RegisterStat(advCatHealth, "Decay", (p) => CatInfo.Decay && p.data.stats.secondsToTakeDamageOver > 0, (p) => string.Format("{0:F2}", p.data.stats.secondsToTakeDamageOver));
             TabInfoManager.RegisterStat(advCatHealth, "Regeneration", (p) => CatInfo.Regenaration && p.data.healthHandler.regeneration > 0, (p) => string.Format("{0:F2}s", p.data.healthHandler.regeneration));
@@ -52,7 +52,7 @@ namespace CatInfo
             TabInfoManager.RegisterStat(advCatGun, "Recoil", (p) => CatInfo.Recoil && p.data.weaponHandler.gun.bodyRecoil != 0 && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil * p.data.weaponHandler.gun.recoilMuiltiplier)); ;
             TabInfoManager.RegisterStat(advCatGun, "Recoil Multiplier", (p) => CatInfo.RecoilMultiplier && p.data.weaponHandler.gun.recoilMuiltiplier != 1, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.recoilMuiltiplier));
             TabInfoManager.RegisterStat(advCatGun, "Body Recoil", (p) => CatInfo.BodyRecoil && p.data.weaponHandler.gun.bodyRecoil != 0, (p) => string.Format("{0:F2}", p.data.weaponHandler.gun.bodyRecoil));
-            var chargedCat = TabInfoManager.RegisterCategory("Charged Stats", 4);
+            var chargedCat = TabInfoManager.RegisterCategory("Charged Stats", 5);
             //#ChargedStats
             TabInfoManager.RegisterStat(chargedCat, "Charged Damage Multiplier", (p) => CatInfo.ChargedDamageMultiplier && p.data.weaponHandler.gun.useCharge && p.data.weaponHandler.gun.chargeDamageMultiplier != 1, (p) => string.Format("{0:F2}",p.data.weaponHandler.gun.chargeDamageMultiplier));
             TabInfoManager.RegisterStat(chargedCat, "Charged Bullet Speed", (p) => CatInfo.ChargedSpeed && p.data.weaponHandler.gun.useCharge && p.data.weaponHandler.gun.chargeSpeedTo != 1, (p) => string.Format("{0:F2}",p.data.weaponHandler.gun.chargeSpeedTo));

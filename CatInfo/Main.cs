@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.UI;
-using UnboundLib.Utils.UI;
+﻿using UnboundLib.Utils.UI;
 using UnityEngine;
 using UnboundLib;
 using BepInEx;
@@ -21,10 +17,16 @@ namespace CatInfo
         public const string Version = "2.2.0";
         public const string ModInitials = "Cats";
 
-        private static Color easyChangeColor = new Color(0.521f, 1f, 0.521f, 1f);
-        private static Color hardChangeColor = new Color(1f, 0.521f, 0.521f, 1f);
+        private static Color HolyWhiteText = new Color(255f, 255f, 255f, 1f);
+        private static Color GreenText = new Color(0.521f, 1f, 0.521f, 1f);
+        private static Color RedText = new Color(1f, 0.521f, 0.521f, 1f);
 
-        
+        private static void CycleArt()
+        {
+            ArtHandler.instance.NextArt();
+            ArtHandler.instance.NextArt();
+        }
+
         internal static string ConfigKey(string name)
         {
             return $"{ModId}_{name.ToLower()}";
@@ -194,11 +196,11 @@ namespace CatInfo
             get { return GetBool("BodyRecoil"); }
             set { SetBool("BodyRecoil", value); }
         }
-        public static bool RecoilMultiplier{
+        public static bool RecoilMultiplier
+        {
             get { return GetBool("RecoilMultiplier"); }
             set { SetBool("RecoilMultiplier", value); }
-        }//HealthCulling BulletRange BulletSpeed BulletSize ProjectileSize ProjectileTimeScale DamageGrowth GunSpread EvenGunSpread BulletDrag ColdBullets Knockback BulletGravity TimeBetweenBursts
-         //AmmoRegeneration Recoil BodyRecoil RecoilMultiplier ChargedDamageMultiplier ChargedSpeed ChargedGunSpread ChargedEvenGunSpread ChargedRecoil ChargedNumberOfProjectiles
+        }
 
         //# Charged Stats
         public static bool ChargedDamageMultiplier{
@@ -225,21 +227,20 @@ namespace CatInfo
             get { return GetBool("ChargedNumberOfProjectiles"); }
             set { SetBool("ChargedNumberOfProjectiles", value); }
         }
-        internal static Dictionary<string, List<Toggle>> TogglesToSync = new Dictionary<string, List<Toggle>>();
-        
+
         private void Start()
         {
             TabinfoInterface.Setup();
             Unbound.RegisterClientSideMod(ModId);
 
-            Unbound.RegisterMenu(ModName, () => { }, NewGUI, null, true);
+            Unbound.RegisterMenu(ModName, () => { }, NewGUI, null, false);
             if (DeprecatedGUI)
-            {//Deprecated GUI
-                Unbound.RegisterGUI(ModName, DrawBasicStatsGUI);
-                Unbound.RegisterGUI(ModName, DrawUsefulStatsGUI);
-                Unbound.RegisterGUI(ModName, DrawAdvHealthStatsGUI);
-                Unbound.RegisterGUI(ModName, DrawAdvGunStatsGUI);
-                Unbound.RegisterGUI(ModName, DrawChargedStatsGUI);
+            {
+                Unbound.RegisterGUI($"{ModName} Basic Stats", DrawBasicStatsGUI);
+                Unbound.RegisterGUI($"{ModName} Useful Stats", DrawUsefulStatsGUI);
+                Unbound.RegisterGUI($"{ModName} Advanced Character Stats", DrawAdvCharacterStatsGUI);
+                Unbound.RegisterGUI($"{ModName} Advanced Gun Stats", DrawAdvGunStatsGUI);
+                Unbound.RegisterGUI($"{ModName} Charged Stats", DrawChargedStatsGUI);
             }
         }
         //Deprecated GUI Toggles
@@ -247,36 +248,36 @@ namespace CatInfo
         {
             if (DeprecatedGUI)
             {
-                GUILayout.Label("Basic Stats\n");
+                GUILayout.Label("Basic Stats");
                 EchoBlocks = GUILayout.Toggle(EchoBlocks, "Echo Blocks");
                 AttackSpeed = GUILayout.Toggle(AttackSpeed, "Attack Speed");
                 LifeSteal = GUILayout.Toggle(LifeSteal, "Life Steal");
                 Bounces = GUILayout.Toggle(Bounces, "Bounces");
                 Bursts = GUILayout.Toggle(Bursts, "Bursts");
                 Bullets = GUILayout.Toggle(Bullets, "Bullets");
-                BounceDamage = GUILayout.Toggle(BounceDamage, "On Bounce Bullet Damage");
-                BounceSpeed = GUILayout.Toggle(BounceSpeed, "On Bounce Bullet Speed");
+                BounceDamage = GUILayout.Toggle(BounceDamage, "Bounce Damage");
+                BounceSpeed = GUILayout.Toggle(BounceSpeed, "Bounce Speed");
             }
         }
         private void DrawUsefulStatsGUI()
         {
             if (DeprecatedGUI)
             {
-                GUILayout.Label("Useful Stats\n");
+                GUILayout.Label("Useful Stats");
                 Unblockable = GUILayout.Toggle(Unblockable, "Unblockable Bullets");
                 GhostBullets = GUILayout.Toggle(GhostBullets, "Ghost Bullets");
-                Chargable = GUILayout.Toggle(Chargable, "Use Charge");
-                DemonicGun = GUILayout.Toggle(DemonicGun, "Dont Allow Auto Fire");
+                Chargable = GUILayout.Toggle(Chargable, "Chargable");
+                DemonicGun = GUILayout.Toggle(DemonicGun, "Demonic Gun");
             }
         }
-        private void DrawAdvHealthStatsGUI()
+        private void DrawAdvCharacterStatsGUI()
         {
             if (DeprecatedGUI)
             {
-                GUILayout.Label("Advanced Health Stats\n");
-                Phoenix = GUILayout.Toggle(Phoenix, "Revives");
+                GUILayout.Label("Advanced Character Stats");
+                Phoenix = GUILayout.Toggle(Phoenix, "Phoenix");
                 HealingOnBlock = GUILayout.Toggle(HealingOnBlock, "Healing On Block");
-                Decay = GUILayout.Toggle(Decay, "Health Decay");
+                Decay = GUILayout.Toggle(Decay, "Decay");
                 Regenaration = GUILayout.Toggle(Regenaration, "Regenaration");
                 Size = GUILayout.Toggle(Size, "Size");
                 Jumps = GUILayout.Toggle(Jumps, "Jumps");
@@ -288,16 +289,16 @@ namespace CatInfo
         {
             if (DeprecatedGUI)
             {
-                GUILayout.Label("Advanced Gun Stats\n");
+                GUILayout.Label("Advanced Gun Stats");
                 HealthCulling = GUILayout.Toggle(HealthCulling, "%Health Culling");
                 BulletRange = GUILayout.Toggle(BulletRange, "Bullet Range");
                 BulletSpeed = GUILayout.Toggle(BulletSpeed, "Bullet Speed");
                 BulletSize = GUILayout.Toggle(BulletSize, "Bullet Size");
                 ProjectileSize = GUILayout.Toggle(ProjectileSize, "Projectile Size");
-                ProjectileTimeScale = GUILayout.Toggle(ProjectileTimeScale, "Projectile Speed");
+                ProjectileTimeScale = GUILayout.Toggle(ProjectileTimeScale, "Projectile Time Scale");
                 DamageGrowth = GUILayout.Toggle(DamageGrowth, "Damage Growth");
-                GunSpread = GUILayout.Toggle(GunSpread, "Bullet Spread");
-                EvenGunSpread = GUILayout.Toggle(EvenGunSpread, "Even Bullet Spread");
+                GunSpread = GUILayout.Toggle(GunSpread, "Gun Spread");
+                EvenGunSpread = GUILayout.Toggle(EvenGunSpread, "Even Gun Spread");
                 BulletDrag = GUILayout.Toggle(BulletDrag, "Bullet Drag");
                 ColdBullets = GUILayout.Toggle(ColdBullets, "Bullet Slow");
                 BulletGravity = GUILayout.Toggle(BulletGravity, "Bullet Gravity");
@@ -313,7 +314,7 @@ namespace CatInfo
         {
             if (DeprecatedGUI)
             {
-                GUILayout.Label("Charged Stats\n");
+                GUILayout.Label("Charged Stats");
                 ChargedDamageMultiplier = GUILayout.Toggle(ChargedDamageMultiplier, "Charged Damage Multiplier");
                 ChargedSpeed = GUILayout.Toggle(ChargedSpeed, "Charged Speed");
                 ChargedGunSpread = GUILayout.Toggle(ChargedGunSpread, "Charged Spread");
@@ -325,36 +326,32 @@ namespace CatInfo
         //Menu GUI
         private static void NewGUI(GameObject menu)
         {
-            InitializeOptionsDictionaries();
+            MenuHandler.CreateText($"Toggle {ModName} Stats", menu, out TextMeshProUGUI _, 90);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 45);
 
-            MenuHandler.CreateText($"Toggle {ModName} Stats\n", menu, out TextMeshProUGUI _, 90);
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn(), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset(), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff(), 75, color: hardChangeColor);
-            
-            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats Extended", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn(), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset(), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff(), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
+            GameObject BasicStats = MenuHandler.CreateMenu("Basic Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             BasicStatsToggles(BasicStats);
-            
             GameObject UsefulStats = MenuHandler.CreateMenu("Useful Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             UsefulStatsToggles(UsefulStats);
-            
-            GameObject AdvancedHealthStats = MenuHandler.CreateMenu("Advanced Health Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
-            AdvancedHealthStatsToggles(AdvancedHealthStats);
-            
+            GameObject AdvancedHealthStats = MenuHandler.CreateMenu("Advanced Character Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            AdvancedCharacterStatsToggles(AdvancedHealthStats);
             GameObject AdvancedGunStats = MenuHandler.CreateMenu("Advanced Gun Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             AdvancedGunStatsToggles(AdvancedGunStats);
-            
-            GameObject ChargedStats = MenuHandler.CreateMenu("Plasma Charged Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
+            GameObject ChargedStats = MenuHandler.CreateMenu("Charged Stats", () => { }, menu, 60, true, true, menu.transform.parent.gameObject);
             ChargedStatsToggles(ChargedStats);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
+
             void DeprecatedGUIChanged(bool value)
             {
-                EchoBlocks = value;
-                SyncOptionsMenus();
+                DeprecatedGUI = value;
+                CycleArt();
             }
-            TogglesToSync["DeprecatedGUI"].Add(MenuHandler.CreateToggle(DeprecatedGUI,
-           "Deprecated GUI", menu, DeprecatedGUIChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-            MenuHandler.CreateToggle(DeprecatedGUI, "Enable Deprecated GUI", menu, value => DeprecatedGUI = value, fontSize: 20, forceUpper: false,color: hardChangeColor);
-
+            MenuHandler.CreateToggle(DeprecatedGUI,"Deprecated GUI", menu,DeprecatedGUIChanged, fontSize: 50, forceUpper: false);
+            MenuHandler.CreateText("Requires Restart Not Recommended", menu, out TextMeshProUGUI _, 50, color: RedText, forceUpper: false);
         }
         //Menu GUI Toggle Presets
         private static void PresetOn(string menuCat = "menuCatagory")
@@ -382,7 +379,7 @@ namespace CatInfo
                 Chargable = setValue;
                 DemonicGun = setValue;
             }
-            if (menuCat == "menuCatagory" || menuCat == "AdvHealthStats")
+            if (menuCat == "menuCatagory" || menuCat == "AdvCharacterStats")
             {//AdvHealthStats  
                 Phoenix = setValue;
                 HealingOnBlock = setValue;
@@ -423,6 +420,7 @@ namespace CatInfo
                 ChargedRecoil = setValue;
                 ChargedNumberOfProjectiles = setValue;
             }
+            CycleArt();
         }
         private static void PresetOff(string menuCat = "menuCatagory")
         {
@@ -449,7 +447,7 @@ namespace CatInfo
                 Chargable = setValue;
                 DemonicGun = setValue;
             }
-            if (menuCat == "menuCatagory" || menuCat == "AdvHealthStats")
+            if (menuCat == "menuCatagory" || menuCat == "AdvCharacterStats")
             {//AdvHealthStats  
                 Phoenix = setValue;
                 HealingOnBlock = setValue;
@@ -490,6 +488,7 @@ namespace CatInfo
                 ChargedRecoil = setValue;
                 ChargedNumberOfProjectiles = setValue;
             }
+            CycleArt();
         }
         private static void ResetToDefualtPreset(string menuCat = "menuCatagory")
         {
@@ -506,16 +505,16 @@ namespace CatInfo
                 Bursts = true;
                 Bullets = true;
                 BounceDamage = true;
+                BounceSpeed = true;
             }
             if (menuCat == "menuCatagory" || menuCat == "UsefulStats")
             {//UsefulStats
-                BounceSpeed = true;
                 Unblockable = true;
                 GhostBullets = true;
                 Chargable = false;
                 DemonicGun = false;
             }
-            if (menuCat == "menuCatagory" || menuCat == "AdvHealthStats")
+            if (menuCat == "menuCatagory" || menuCat == "AdvCharacterStats")
             {//AdvHealthStats
                 Phoenix = true;
                 HealingOnBlock = false;
@@ -556,460 +555,316 @@ namespace CatInfo
                 ChargedRecoil = false;
                 ChargedNumberOfProjectiles = false;
             }
+            CycleArt();
         }
         //Menu GUI Toggles
         private static void BasicStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn("BasicStats"), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset("BasicStats"), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff("BasicStats"), 75, color: hardChangeColor);
-            MenuHandler.CreateText("Can Only Toggle Basic Stats Added By CatInfo\n", menu, out TextMeshProUGUI _, 40);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn("BasicStats"), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset("BasicStats"), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff("BasicStats"), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
+            MenuHandler.CreateText("Can Only Toggle Basic Stats Added By CatInfo", menu, out TextMeshProUGUI _, 40);
+
             void EchoBlocksChanged(bool value)
             {
                 EchoBlocks = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["EchoBlocks"].Add(MenuHandler.CreateToggle(EchoBlocks,
-            "Echo Blocks", menu, EchoBlocksChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-            
+            MenuHandler.CreateToggle(EchoBlocks, "Echo Blocks", menu, EchoBlocksChanged, fontSize: 50, forceUpper: false);
+
             void AttackSpeedChanged(bool value)
             {
                 AttackSpeed = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["AttackSpeed"].Add(MenuHandler.CreateToggle(AttackSpeed,
-            "Attack Speed", menu, AttackSpeedChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-            
+            MenuHandler.CreateToggle(AttackSpeed, "Attack Speed", menu, AttackSpeedChanged, fontSize: 50, forceUpper: false);
+
             void LifeStealChanged(bool value)
             {
                 LifeSteal = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["LifeSteal"].Add(MenuHandler.CreateToggle(LifeSteal,
-            "Life Steal", menu, LifeStealChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(LifeSteal, "Life Steal", menu, LifeStealChanged, fontSize: 50, forceUpper: false);
             void BouncesChanged(bool value)
             {
                 Bounces = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Bounces"].Add(MenuHandler.CreateToggle(Bounces,
-            "Bounces", menu, BouncesChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Bounces, "Bounces", menu, BouncesChanged, fontSize: 50, forceUpper: false);
             void BurstsChanged(bool value)
             {
-                Bounces = value;
-                SyncOptionsMenus();
+                Bursts = value;
+                CycleArt();
             }
-            TogglesToSync["Bursts"].Add(MenuHandler.CreateToggle(Bursts,
-            "Bursts", menu, BurstsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Bursts, "Bursts", menu, BurstsChanged, fontSize: 50, forceUpper: false);
             void BulletsChanged(bool value)
             {
                 Bullets = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Bullets"].Add(MenuHandler.CreateToggle(Bullets,
-            "Bullets", menu, BulletsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Bullets, "Bullets", menu, BulletsChanged, fontSize: 50, forceUpper: false);
             void BounceDamageChanged(bool value)
             {
                 BounceDamage = value;
-                SyncOptionsMenus();
-            }//Needs to change Regex
-            TogglesToSync["BounceDamage"].Add(MenuHandler.CreateToggle(BounceDamage,
-            "Bounce Damage", menu, BounceDamageChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-            void BounceSpeedChanged(bool value)
-            {//Needs to change Regex
-                BounceSpeed = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BounceSpeed"].Add(MenuHandler.CreateToggle(BounceSpeed,
-            "Bounce Speed", menu, BounceSpeedChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BounceDamage, "Bounce Damage", menu, BounceDamageChanged, fontSize: 50, forceUpper: false);
+            void BounceSpeedChanged(bool value)
+            {
+                BounceSpeed = value;
+                CycleArt();
+            }
+            MenuHandler.CreateToggle(BounceSpeed, "Bounce Speed", menu, BounceSpeedChanged, fontSize: 50, forceUpper: false);
         }
         private static void UsefulStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn("UsefulStats"), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset("UsefulStats"), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff("UsefulStats"), 75, color: hardChangeColor);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn("UsefulStats"), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset("UsefulStats"), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff("UsefulStats"), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
 
             void UnblockableChanged(bool value)
             {
                 Unblockable = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Unblockable"].Add(MenuHandler.CreateToggle(Unblockable,
-            "Unblockable", menu, UnblockableChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Unblockable,"Unblockable", menu, UnblockableChanged, fontSize: 50, forceUpper: false);
             void GhostBulletsChanged(bool value)
             {
                 GhostBullets = value;
-                SyncOptionsMenus();
+                CycleArt(); 
             }
-            TogglesToSync["GhostBullets"].Add(MenuHandler.CreateToggle(GhostBullets,
-            "Ghost Bullets", menu, GhostBulletsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(GhostBullets, "Ghost Bullets", menu, GhostBulletsChanged, fontSize: 50, forceUpper: false);
             void ChargableChanged(bool value)
             {
                 Chargable = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Chargable"].Add(MenuHandler.CreateToggle(Chargable,
-            "Chargable", menu, ChargableChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Chargable, "Chargable", menu, ChargableChanged, fontSize: 50, forceUpper: false);
             void DemonicGunChanged(bool value)
             {
                 DemonicGun = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["DemonicGun"].Add(MenuHandler.CreateToggle(DemonicGun,
-            "Demonic Gun", menu, DemonicGunChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(DemonicGun, "Demonic Gun", menu, DemonicGunChanged, fontSize: 50, forceUpper: false);
         }
-        private static void AdvancedHealthStatsToggles(GameObject menu)
+        private static void AdvancedCharacterStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn("AdvHealthStats"), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset("AdvHealthStats"), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff("AdvHealthStats"), 75, color: hardChangeColor);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn("AdvCharacterStats"), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset("AdvCharacterStats"), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff("AdvCharacterStats"), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
+
             void PhoenixChanged(bool value)
             {
                 Phoenix = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Phoenix"].Add(MenuHandler.CreateToggle(Phoenix,
-            "Phoenix", menu, PhoenixChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Phoenix,"Phoenix", menu, PhoenixChanged, fontSize: 50, forceUpper: false);
             void HealingOnBlockChanged(bool value)
             {
                 HealingOnBlock = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["HealingOnBlock"].Add(MenuHandler.CreateToggle(HealingOnBlock,
-            "Healing On Block", menu, HealingOnBlockChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(HealingOnBlock,"Healing On Block", menu, HealingOnBlockChanged, fontSize: 50, forceUpper: false);
             void DecayChanged(bool value)
             {
                 Decay = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Decay"].Add(MenuHandler.CreateToggle(Decay,
-            "Decay", menu, DecayChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Decay,"Decay", menu, DecayChanged, fontSize: 50, forceUpper: false);
             void RegenerationChanged(bool value)
             {
                 Regenaration = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Regeneration"].Add(MenuHandler.CreateToggle(Regenaration,
-            "Regeneration", menu, RegenerationChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Regenaration,"Regeneration", menu, RegenerationChanged, fontSize: 50, forceUpper: false);
             void SizeChanged(bool value)
             {
                 Size = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Size"].Add(MenuHandler.CreateToggle(Size,
-            "Size", menu, SizeChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Size,"Size", menu, SizeChanged, fontSize: 50, forceUpper: false);
             void JumpsChanged(bool value)
             {
                 Jumps = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Jumps"].Add(MenuHandler.CreateToggle(Jumps,
-            "Jumps", menu, JumpsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Jumps,"Jumps", menu, JumpsChanged, fontSize: 50, forceUpper: false);
             void JumpHightChanged(bool value)
             {
                 JumpHight = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["JumpHight"].Add(MenuHandler.CreateToggle(JumpHight,
-            "Jump Hight", menu, JumpHightChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(JumpHight,"Jump Hight", menu, JumpHightChanged, fontSize: 50, forceUpper: false);
             void GravityChanged(bool value)
             {
                 Gravity = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Gravity"].Add(MenuHandler.CreateToggle(Gravity,
-            "Gravity", menu, GravityChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Gravity, "Gravity", menu, GravityChanged, fontSize: 50, forceUpper: false);
         }
         private static void AdvancedGunStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn("AdvGunStats"), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset("AdvGunStats"), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff("AdvGunStats"), 75, color: hardChangeColor);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn("AdvGunStats"), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset("AdvGunStats"), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff("AdvGunStats"), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
 
             void HealthCullingChanged(bool value) 
             {
                 HealthCulling = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["HealthCulling"].Add(MenuHandler.CreateToggle(HealthCulling,
-            "%Health Culling", menu, HealthCullingChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(HealthCulling,"%Health Culling", menu, HealthCullingChanged, fontSize: 50, forceUpper: false);
             void BulletRangeChanged(bool value)
             {
                 BulletRange = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BulletRange"].Add(MenuHandler.CreateToggle(BulletRange,
-            "Bullet Range", menu, BulletRangeChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BulletRange, "Bullet Range", menu, BulletRangeChanged, fontSize: 50, forceUpper: false);
             void BulletSpeedChanged(bool value)
             {
                 BulletSpeed = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BulletSpeed"].Add(MenuHandler.CreateToggle(BulletSpeed,
-            "Bullet Speed", menu, BulletSpeedChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BulletSpeed,"Bullet Speed", menu, BulletSpeedChanged, fontSize: 50, forceUpper: false);
             void BulletSizeChanged(bool value)
             {
                 BulletSize = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BulletSize"].Add(MenuHandler.CreateToggle(BulletSize,
-            "Bullet Size", menu, BulletSizeChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BulletSize,"Bullet Size", menu, BulletSizeChanged, fontSize: 50, forceUpper: false);
             void ProjectileSizeChanged(bool value)
             {
                 ProjectileSize = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ProjectileSize"].Add(MenuHandler.CreateToggle(ProjectileSize,
-            "Projectile Size", menu, ProjectileSizeChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ProjectileSize,"Projectile Size", menu, ProjectileSizeChanged, fontSize: 50, forceUpper: false);
             void ProjectileTimeScaleChanged(bool value)
             {
                 ProjectileTimeScale = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ProjectileTimeScale"].Add(MenuHandler.CreateToggle(ProjectileTimeScale,
-                "Projectile Time Scale", menu, ProjectileTimeScaleChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ProjectileTimeScale,"Projectile Time Scale", menu, ProjectileTimeScaleChanged, fontSize: 50, forceUpper: false);
             void DamageGrowthChanged(bool value)
             {
                 DamageGrowth = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["DamageGrowth"].Add(MenuHandler.CreateToggle(DamageGrowth,
-            "Damage Growth", menu, DamageGrowthChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(DamageGrowth,"Damage Growth", menu, DamageGrowthChanged, fontSize: 50, forceUpper: false);
             void GunSpreadChanged(bool value)
             {
                 GunSpread = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["GunSpread"].Add(MenuHandler.CreateToggle(GunSpread,
-            "Gun Spread", menu, GunSpreadChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(GunSpread,"Gun Spread", menu, GunSpreadChanged, fontSize: 50, forceUpper: false);
             void EvenGunSpreadChanged(bool value)
             {
                 EvenGunSpread = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["EvenGunSpread"].Add(MenuHandler.CreateToggle(EvenGunSpread,
-            "Even Gun Spread", menu, EvenGunSpreadChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(EvenGunSpread,"Even Gun Spread", menu, EvenGunSpreadChanged, fontSize: 50, forceUpper: false);
             void BulletDragChanged(bool value)
             {
                 BulletDrag = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BulletDrag"].Add(MenuHandler.CreateToggle(BulletDrag,
-            "Bullet Drag", menu, BulletDragChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BulletDrag,"Bullet Drag", menu, BulletDragChanged, fontSize: 50, forceUpper: false);
             void ColdBulletsChanged(bool value)
             {
                 ColdBullets = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ColdBullets"].Add(MenuHandler.CreateToggle(ColdBullets,
-            "Cold Bullets", menu, ColdBulletsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ColdBullets,"Cold Bullets", menu, ColdBulletsChanged, fontSize: 50, forceUpper: false);
             void BulletGravityChanged(bool value)
             {
                 BulletGravity = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BulletGravity"].Add(MenuHandler.CreateToggle(BulletGravity,
-            "Bullet Gravity", menu, BulletGravityChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BulletGravity,"Bullet Gravity", menu, BulletGravityChanged, fontSize: 50, forceUpper: false);
             void KnockbackChanged(bool value)
             {
                 Knockback = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Knockback"].Add(MenuHandler.CreateToggle(Knockback,
-            "Knockback", menu, KnockbackChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Knockback,"Knockback", menu, KnockbackChanged, fontSize: 50, forceUpper: false);
             void TimeBetweenBurstsChanged(bool value)
             {
                 TimeBetweenBursts = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["TimeBetweenBursts"].Add(MenuHandler.CreateToggle(TimeBetweenBursts,
-            "Time Between Bursts", menu, TimeBetweenBurstsChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(TimeBetweenBursts,"Time Between Bursts", menu, TimeBetweenBurstsChanged, fontSize: 50, forceUpper: false);
             void AmmoRegenerationChanged(bool value)
             {
                 AmmoRegeneration = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["AmmoRegeneration"].Add(MenuHandler.CreateToggle(AmmoRegeneration,
-            "%Ammo Regeneration", menu, AmmoRegenerationChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-            MenuHandler.CreateText("Most Mods havent updated to use the BodyRecoil Stat for recoil as it was only fixed reacntly " +
-                "and are currently using their own recoil stat that i cannot display\nRecoil = bodyRecoil * chargedRecoil * recoilMultiplier", menu, out TextMeshProUGUI _, 40);
+            MenuHandler.CreateToggle(AmmoRegeneration, "%Ammo Regeneration", menu, AmmoRegenerationChanged, fontSize: 50, forceUpper: false);
             void RecoilChanged(bool value)
             {
                 Recoil = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["Recoil"].Add(MenuHandler.CreateToggle(Recoil,
-            "Recoil", menu, RecoilChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(Recoil,"Recoil", menu, RecoilChanged, fontSize: 50, forceUpper: false);
             void BodyRecoilChanged(bool value)
             {
                 BodyRecoil = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["BodyRecoil"].Add(MenuHandler.CreateToggle(BodyRecoil,
-            "Body Recoil", menu, BodyRecoilChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(BodyRecoil,"Body Recoil", menu, BodyRecoilChanged, fontSize: 50, forceUpper: false);
             void RecoilMultiplierChanged(bool value)
             {
                 RecoilMultiplier = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["RecoilMultiplier"].Add(MenuHandler.CreateToggle(RecoilMultiplier,
-            "Recoil Multiplier", menu, RecoilMultiplierChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(RecoilMultiplier,
+            "Recoil Multiplier", menu, RecoilMultiplierChanged, fontSize: 50, forceUpper: false);
         }
         private static void ChargedStatsToggles(GameObject menu)
         {
-            MenuHandler.CreateButton("Enable All", menu, () => PresetOn("ChargedStats"), 75, color: easyChangeColor);
-            MenuHandler.CreateButton("Reset To Defualt", menu, () => ResetToDefualtPreset("ChargedStats"), 75);
-            MenuHandler.CreateButton("Disable All\n", menu, () => PresetOff("ChargedStats"), 75, color: hardChangeColor);
+            MenuHandler.CreateButton("<b>Enable All</b>", menu, () => PresetOn("ChargedStats"), 75, color: GreenText);
+            MenuHandler.CreateButton("<b>Reset To Defualt</b>", menu, () => ResetToDefualtPreset("ChargedStats"), 75, color: HolyWhiteText);
+            MenuHandler.CreateButton("<b>Disable All</b>", menu, () => PresetOff("ChargedStats"), 75, color: RedText);
+            MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
 
             void ChargedDamageMultiplierChanged(bool value)
             {
                 ChargedDamageMultiplier = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedDamageMultiplier"].Add(MenuHandler.CreateToggle(ChargedDamageMultiplier,
-            "Charged Damage Multiplier", menu, ChargedDamageMultiplierChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ChargedDamageMultiplier, "Charged Damage Multiplier", menu, ChargedDamageMultiplierChanged, fontSize: 50, forceUpper: false);
             void ChargedSpeedChanged(bool value)
             {
                 ChargedSpeed = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedSpeed"].Add(MenuHandler.CreateToggle(ChargedSpeed,
-            "Charged Speed", menu, ChargedSpeedChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ChargedSpeed, "Charged Speed", menu, ChargedSpeedChanged, fontSize: 50, forceUpper: false);
             void ChargedGunSpreadChanged(bool value)
             {
                 ChargedGunSpread = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedGunSpread"].Add(MenuHandler.CreateToggle(ChargedGunSpread,
-            "Charged Gun Spread", menu, ChargedGunSpreadChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ChargedGunSpread, "Charged Gun Spread", menu, ChargedGunSpreadChanged, fontSize: 50, forceUpper: false);
             void ChargedEvenGunSpreadChanged(bool value)
             {
                 ChargedEvenGunSpread = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedEvenGunSpread"].Add(MenuHandler.CreateToggle(ChargedEvenGunSpread,
-            "Charged Even Gun Spread", menu, ChargedEvenGunSpreadChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ChargedEvenGunSpread, "Charged Even Gun Spread", menu, ChargedEvenGunSpreadChanged, fontSize: 50, forceUpper: false);
             void ChargedRecoilChanged(bool value)
             {
                 ChargedRecoil = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedRecoil"].Add(MenuHandler.CreateToggle(ChargedRecoil,
-            "Charged Recoil", menu, ChargedRecoilChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
+            MenuHandler.CreateToggle(ChargedRecoil,"Charged Recoil", menu, ChargedRecoilChanged, fontSize: 50, forceUpper: false);
             void ChargedNumberOfProjectilesChanged(bool value)
             {
                 ChargedNumberOfProjectiles = value;
-                SyncOptionsMenus();
+                CycleArt();
             }
-            TogglesToSync["ChargedNumberOfProjectiles"].Add(MenuHandler.CreateToggle(ChargedNumberOfProjectiles,
-            "Charged Number Of Projectiles", menu, ChargedNumberOfProjectilesChanged, fontSize: 50, forceUpper: false).GetComponent<Toggle>());
-        }
-        
-        private static void InitializeOptionsDictionaries()
-        {
-            if (!TogglesToSync.Keys.Contains("DeprecatedGUI")) { TogglesToSync["EchoBlocks"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("EchoBlocks")) { TogglesToSync["EchoBlocks"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Attackspeed")) { TogglesToSync["Attackspeed"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("LifeSteal")) { TogglesToSync["LifeSteal"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Bounces")) { TogglesToSync["Bounces"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Bursts")) { TogglesToSync["Bursts"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Bullets")) { TogglesToSync["Bullets"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BounceDamage")) { TogglesToSync["BounceDamage"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BounceSpeed")) { TogglesToSync["BounceSpeed"] = new List<Toggle>() { }; }
-            //
-            if (!TogglesToSync.Keys.Contains("Unblockable")) { TogglesToSync["Unblockable"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Ghost")) { TogglesToSync["Ghost"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Chargable")) { TogglesToSync["Chargable"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("DemonicGun")) { TogglesToSync["DemonicGun"] = new List<Toggle>() { }; }
-            //
-            if (!TogglesToSync.Keys.Contains("Phoenix")) { TogglesToSync["Phoenix"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("HealingOnBlock")) { TogglesToSync["HealingOnBlock"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Decay")) { TogglesToSync["Decay"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Regeneration")) { TogglesToSync["Regeneration"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Size")) { TogglesToSync["Size"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Jumps")) { TogglesToSync["Jumps"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("JumpHight")) { TogglesToSync["JumpHight"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Gravity")) { TogglesToSync["Gravity"] = new List<Toggle>() { }; }
-            //
-            if (!TogglesToSync.Keys.Contains("HealthCulling")) { TogglesToSync["HealthCulling"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BulletRange")) { TogglesToSync["BulletRange"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BulletSpeed")) { TogglesToSync["BulletSpeed"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BulletSize")) { TogglesToSync["BulletSize"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ProjectileSize")) { TogglesToSync["ProjectileSize"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ProjectileTimeScale")) { TogglesToSync["ProjectileTimeScale"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("DamageGrowth")) { TogglesToSync["DamageGrowth"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("GunSpread")) { TogglesToSync["GunSpread"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("EvenGunSpread")) { TogglesToSync["EvenGunSpread"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BulletDrag")) { TogglesToSync["BulletDrag"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ColdBullets")) { TogglesToSync["ColdBullets"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Knockback")) { TogglesToSync["Knockback"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BulletGravity")) { TogglesToSync["BulletGravity"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("TimeBetweenBursts")) { TogglesToSync["TimeBetweenBursts"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("AmmoRegeneration")) { TogglesToSync["AmmoRegeneration"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("Recoil")) { TogglesToSync["Recoil"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("BodyRecoil")) { TogglesToSync["BodyRecoil"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("RecoilMultiplier")) { TogglesToSync["RecoilMultiplier"] = new List<Toggle>() { }; }
-            //
-            if (!TogglesToSync.Keys.Contains("ChargedDamageMultiplier")) { TogglesToSync["ChargedDamageMultiplier"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ChargedSpeed")) { TogglesToSync["ChargedSpeed"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ChargedGunSpread")) { TogglesToSync["ChargedGunSpread"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ChargedEvenGunSpread")) { TogglesToSync["ChargedEvenGunSpread"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ChargedRecoil")) { TogglesToSync["ChargedRecoil"] = new List<Toggle>() { }; }
-            if (!TogglesToSync.Keys.Contains("ChargedNumberOfProjectiles")) { TogglesToSync["ChargedNumberOfProjectiles"] = new List<Toggle>() { }; }
-        }
-        private static void SyncOptionsMenus(int recurse = 3)
-        {
-            foreach (Toggle toggle in TogglesToSync["DeprecatedGUI"]) { toggle.isOn = DeprecatedGUI; }
-            foreach (Toggle toggle in TogglesToSync["EchoBlocks"]) { toggle.isOn = EchoBlocks; }
-            foreach (Toggle toggle in TogglesToSync["AttackSpeed"]) { toggle.isOn = AttackSpeed; }
-            foreach (Toggle toggle in TogglesToSync["LifeSteal"]) { toggle.isOn = LifeSteal; }
-            foreach (Toggle toggle in TogglesToSync["Bounces"]) { toggle.isOn = Bounces; }
-            foreach (Toggle toggle in TogglesToSync["Bursts"]) { toggle.isOn = Bursts; }
-            foreach (Toggle toggle in TogglesToSync["Bullets"]) { toggle.isOn = Bullets; }
-            foreach (Toggle toggle in TogglesToSync["BounceDamage"]) { toggle.isOn = BounceDamage; }
-            foreach (Toggle toggle in TogglesToSync["BounceSpeed"]) { toggle.isOn = BounceSpeed; }
-            //
-            foreach (Toggle toggle in TogglesToSync["Unblockable"]) { toggle.isOn = Unblockable; }
-            foreach (Toggle toggle in TogglesToSync["Ghost"]) { toggle.isOn = GhostBullets; }
-            foreach (Toggle toggle in TogglesToSync["Chargable"]) { toggle.isOn = Chargable; }
-            foreach (Toggle toggle in TogglesToSync["DemonicGun"]) { toggle.isOn = DemonicGun; }
-            //
-            foreach (Toggle toggle in TogglesToSync["Phoenix"]) { toggle.isOn = Phoenix; }
-            foreach (Toggle toggle in TogglesToSync["HealingOnBlock"]) { toggle.isOn = HealingOnBlock; }
-            foreach (Toggle toggle in TogglesToSync["Decay"]) { toggle.isOn = Decay; }
-            foreach (Toggle toggle in TogglesToSync["Regeneration"]) { toggle.isOn = Regenaration; }
-            foreach (Toggle toggle in TogglesToSync["Size"]) { toggle.isOn = Size; }
-            foreach (Toggle toggle in TogglesToSync["Jumps"]) { toggle.isOn = Jumps; }
-            foreach (Toggle toggle in TogglesToSync["JumpHight"]) { toggle.isOn = JumpHight; }
-            foreach (Toggle toggle in TogglesToSync["Gravity"]) { toggle.isOn = Gravity; }
-            //
-            foreach (Toggle toggle in TogglesToSync["HealthCulling"]) { toggle.isOn = HealthCulling; }
-            foreach (Toggle toggle in TogglesToSync["BulletRange"]) { toggle.isOn = BulletRange; }
-            foreach (Toggle toggle in TogglesToSync["BulletSpeed"]) { toggle.isOn = BulletSpeed; }
-            foreach (Toggle toggle in TogglesToSync["BulletSize"]) { toggle.isOn = BulletSize; }
-            foreach (Toggle toggle in TogglesToSync["ProjectileSize"]) { toggle.isOn = ProjectileSize; }
-            foreach (Toggle toggle in TogglesToSync["ProjectileTimeScale"]) { toggle.isOn = ProjectileTimeScale; }
-            foreach (Toggle toggle in TogglesToSync["DamageGrowth"]) { toggle.isOn = DamageGrowth; }
-            foreach (Toggle toggle in TogglesToSync["GunSpread"]) { toggle.isOn = GunSpread; }
-            foreach (Toggle toggle in TogglesToSync["EvenGunSpread"]) { toggle.isOn = EvenGunSpread; }
-            foreach (Toggle toggle in TogglesToSync["BulletDrag"]) { toggle.isOn = BulletDrag; }
-            foreach (Toggle toggle in TogglesToSync["ColdBullets"]) { toggle.isOn = ColdBullets; }
-            foreach (Toggle toggle in TogglesToSync["Knockback"]) { toggle.isOn = Knockback; }
-            foreach (Toggle toggle in TogglesToSync["BulletGravity"]) { toggle.isOn = BulletGravity; }
-            foreach (Toggle toggle in TogglesToSync["TimeBetweenBursts"]) { toggle.isOn = TimeBetweenBursts; }
-            foreach (Toggle toggle in TogglesToSync["AmmoRegeneration"]) { toggle.isOn = AmmoRegeneration; }
-            foreach (Toggle toggle in TogglesToSync["Recoil"]) { toggle.isOn = Recoil; }
-            foreach (Toggle toggle in TogglesToSync["BodyRecoil"]) { toggle.isOn = BodyRecoil; }
-            foreach (Toggle toggle in TogglesToSync["RecoilMultiplier"]) { toggle.isOn = RecoilMultiplier; }
-            //
-            foreach (Toggle toggle in TogglesToSync["ChargedDamageMultiplier"]) { toggle.isOn = ChargedDamageMultiplier; }
-            foreach (Toggle toggle in TogglesToSync["ChargedSpeed"]) { toggle.isOn = ChargedSpeed; }
-            foreach (Toggle toggle in TogglesToSync["ChargedSpread"]) { toggle.isOn = ChargedGunSpread; }
-            foreach (Toggle toggle in TogglesToSync["ChargedEvenGunSpread"]) { toggle.isOn = ChargedEvenGunSpread; }
-            foreach (Toggle toggle in TogglesToSync["ChargedRecoil"]) { toggle.isOn = ChargedRecoil; }
-            foreach (Toggle toggle in TogglesToSync["ChargedNumberOfProjectiles"]) { toggle.isOn = ChargedNumberOfProjectiles; }
-
-            if (recurse > 0) { SyncOptionsMenus(recurse - 1); }
+            MenuHandler.CreateToggle(ChargedNumberOfProjectiles,"Charged Number Of Projectiles", menu, ChargedNumberOfProjectilesChanged, fontSize: 50, forceUpper: false);
         }
     }
 }
