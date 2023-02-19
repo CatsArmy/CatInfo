@@ -14,7 +14,7 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "2.2.1";
+        public const string Version = "2.2.2";
         public const string ModInitials = "Cats";
 
         private static Color HolyWhiteText = new Color(255f, 255f, 255f, 1f);
