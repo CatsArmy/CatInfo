@@ -14,7 +14,7 @@ namespace CatInfo
     {
         private const string ModId = "Com.Cat.Info";
         private const string ModName = "CatInfo";
-        public const string Version = "2.2.0";
+        public const string Version = "2.2.1";
         public const string ModInitials = "Cats";
 
         private static Color HolyWhiteText = new Color(255f, 255f, 255f, 1f);
@@ -234,6 +234,16 @@ namespace CatInfo
             Unbound.RegisterClientSideMod(ModId);
 
             Unbound.RegisterMenu(ModName, () => { }, NewGUI, null, false);
+            Unbound.RegisterCredits(ModName, new string[] {
+                "Cats Army (CatInfo)","willuwontu (Creator Of TabInfo) - Helped With Code", "Root[Tess] - Helped With Code",
+                "Willis - Helped With Code" },
+                new string[] { "CatInfo Thunderstore","TabInfo Thunderstore","Root Thunderstore","Willis Thunderstore" }
+                ,new string[] {
+                    "https://rounds.thunderstore.io/package/CatsArmy/CatInfo/",
+                    "https://rounds.thunderstore.io/package/willuwontu/TabInfo/",
+                    "https://rounds.thunderstore.io/package/Root/",
+                    "https://rounds.thunderstore.io/package/willis81808/" });
+
             if (DeprecatedGUI)
             {
                 Unbound.RegisterGUI($"{ModName} Basic Stats", DrawBasicStatsGUI);

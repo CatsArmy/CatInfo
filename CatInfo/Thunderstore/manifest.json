@@ -1,0 +1,12 @@
+{
+	"name":"CatInfo",
+	"author_name":"CatsArmy",
+    "version_number":"2.2.1",
+	"website_url":"https://github.com/CatsArmy/CatInfo",
+	"displayName":"CatInfo",
+	"description":"Updated README & Added credit menu",
+	"dependencies": [
+	    "willis81808-UnboundLib-3.2.5",
+		"willuwontu-TabInfo-0.0.2"
+	]
+}
