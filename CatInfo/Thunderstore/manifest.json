@@ -1,12 +1,12 @@
 {
 	"name":"CatInfo",
 	"author_name":"CatsArmy",
-    "version_number":"2.2.1",
+    "version_number":"2.3.0",
 	"website_url":"https://github.com/CatsArmy/CatInfo",
 	"displayName":"CatInfo",
-	"description":"Updated README & Added credit menu",
+	"description":"Have you ever wanted more accurate stats? then here's CatInfo this mod is an add-on to TabInfo. CatInfo adds lots of stats that are all toggleable. Most stats are disabled by default. Patch Notes on thunderstore page",
 	"dependencies": [
-	    "willis81808-UnboundLib-3.2.5",
-		"willuwontu-TabInfo-0.0.2"
+	    "willis81808-UnboundLib-3.2.9",
+		"willuwontu-TabInfo-0.0.3"
 	]
 }

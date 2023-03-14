@@ -3,9 +3,32 @@
 
 <details>
    <summary>   
+<code>Update 2.3.0</code>
+	</summary>
+<code>removed toggles and menu in favor of the tabinfo update</code>
+</details>
+<details>
+   <summary>   
+<code>Update 2.2.4</code>
+	</summary>
+<code>fixed typo and made description more "informative"</code>
+</details>
+ <summary>   
+<code>Update 2.2.3</code>
+	</summary>
+<code>Updated the png to an apng to hopefuly add the gif i made it as</code>
+</details>
+<details>
+   <summary>   
+<code>Update 2.2.2</code>
+	</summary>
+<code>Fixed Patch Notes to showup cus i named the file the wrong name</code>
+</details>
+<details>
+   <summary>   
 <code>Update 2.2.1</code>
 	</summary>
-<code>Updated README & Added credit menu</code>
+<code>Updated README & Added credit menu <s>& added Patch Notes</s></code>
 </details>
 <details>
    <summary>   
