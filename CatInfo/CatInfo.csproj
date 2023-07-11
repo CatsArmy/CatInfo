@@ -16,7 +16,7 @@
 			<HintPath>Dependencys\BepInEx.dll</HintPath>
 		</Reference>
 		<Reference Include="MMHOOK_Assembly-CSharp">
-			<HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\ROUNDS\profiles\divorcegiftpeanutbutter\BepInEx\plugins\willis81808-MMHook\MMHOOK_Assembly-CSharp.dll</HintPath>
+		  <HintPath>D:\r2modmanPlus-local\ROUNDS\profiles\divorcegiftpeanutbutter\BepInEx\plugins\willis81808-MMHook\MMHOOK_Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="TabInfo">
 		  <HintPath>..\..\TabInfo\TabInfo\bin\Debug\netstandard2.1\TabInfo.dll</HintPath>

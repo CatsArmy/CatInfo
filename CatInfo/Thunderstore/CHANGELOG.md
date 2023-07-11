@@ -1,6 +1,11 @@
 
 ## Patch Notes
-
+<details>
+   <summary>   
+<code>Update 2.4.0</code>
+	</summary>
+<code>fixed up a bit of the names of the stats, added config to allways show stats</code>
+</details>
 <details>
    <summary>   
 <code>Update 2.3.0</code>
