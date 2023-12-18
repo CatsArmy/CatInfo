@@ -16,7 +16,7 @@
 			<HintPath>Dependencys\BepInEx.dll</HintPath>
 		</Reference>
 		<Reference Include="MMHOOK_Assembly-CSharp">
-		  <HintPath>D:\r2modmanPlus-local\ROUNDS\profiles\divorcegiftpeanutbutter\BepInEx\plugins\willis81808-MMHook\MMHOOK_Assembly-CSharp.dll</HintPath>
+		  <HintPath>D:\Program Files (x86)\Games\r2modmanPlus-local\ROUNDS\profiles\Allpatchedup\BepInEx\plugins\willis81808-MMHook\MMHOOK_Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="TabInfo">
 		  <HintPath>..\..\TabInfo\TabInfo\bin\Debug\netstandard2.1\TabInfo.dll</HintPath>
@@ -34,19 +34,19 @@
 			<HintPath>Dependencys\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.IMGUIModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+		  <HintPath>C:\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.TextRenderingModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+		  <HintPath>C:\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UI.dll</HintPath>
+		  <HintPath>C:\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UI.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UIElementsModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+		  <HintPath>C:\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UIModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+		  <HintPath>C:\Program Files (x86)\Steam\steamapps\common\ROUNDS\Rounds_Data\Managed\UnityEngine.UIModule.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

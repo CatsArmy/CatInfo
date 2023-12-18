@@ -6,7 +6,7 @@
 	"displayName":"CatInfo",
 	"description":"Have you ever wanted more accurate stats? Here's CatInfo. CatInfo is an add-on mod to TabInfo. CatInfo adds ~all stats that are missing in TabInfo. Now featuring the option to allways show stats. Patch Notes on thunderstore page",
 	"dependencies": [
-	    "willis81808-UnboundLib-3.2.10",
-		"willuwontu-TabInfo-0.0.3"
+		"willis81808-UnboundLib-3.2.10",
+		"willreuploadscuzheruinedstuff-TabInfo-0.0.3"
 	]
 }

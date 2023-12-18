@@ -4,7 +4,7 @@
    <summary>   
 <code>Update 2.4.0</code>
 	</summary>
-<code>fixed up a bit of the names of the stats, added config to allways show stats</code>
+<code>fixed up a bit of the names of the stats, added config to allways show stats and updated dependencys</code>
 </details>
 <details>
    <summary>   
